@@ -1,0 +1,131 @@
+.pokemonDetails {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: .5rem;
+    margin: 0;
+    flex-direction: column;
+}
+.thePokemonSelected {
+    display: flex;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #ffff;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+   }
+
+.thePokemonSelected .name {
+    color: #000;
+    margin-bottom: 0;
+    text-transform: capitalize;
+  }
+
+  .thePokemonSelected .number{
+    color: #ffff;
+    opacity: .3;
+    text-align: right;
+    font-size: 1rem;
+   }
+
+   .thePokemonSelected .detail .types .type {
+    color: #ffff;
+    padding: .25rem .5rem;
+    margin: .125rem 0;
+    font-size: 1rem;
+    border-radius: 1rem;
+    filter:brightness(1.1);
+    text-transform: capitalize;
+  }
+
+  .thePokemonSelected ol.types {
+    display: flex;
+    margin: 0;
+    list-style: none;
+    padding: 1rem;
+    flex-direction: row;
+    
+  }
+
+     
+  .thePokemonSelected .detail{
+    display: flex;
+    align-items: start;
+  } 
+
+  .tributesPokemon {
+    display: flex;
+    flex-direction: column;
+}
+
+.tributesPokemon ol.powerDetails {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-between;
+    padding: 2rem;
+    text-transform: capitalize;
+}
+
+
+  .thePokemonSelected  img {
+    max-width: 100%;
+    height: 150px;
+    margin:0;
+  }
+   .normal {
+      background-color: #a6a877;
+    }
+    .grass {
+      background-color: #77c858;
+    }
+    .fire {
+      background-color: #ee7f38;
+    }
+    .water {
+      background-color: #678fee;
+    }
+    .electric {
+      background-color: #f7cf2e;
+    }
+    .ice {
+      background-color: #98d5d7;
+    }
+    .ground {
+      background-color: #dfbf69;
+    }
+    .flying {
+      background-color: #a98ff8;
+    }
+    .poison {
+      background-color: #a040a0;
+    }
+    .fighting {
+      background-color: #bf3029;
+    }
+    .psychic {
+      background-color: #f65687;
+    }
+    .dark {
+      background-color: #725847;
+    }
+    .rock {
+      background-color: #b8a137;
+    }
+    .bug {
+      background-color: #a8b720;
+    }
+    .ghost {
+      background-color: #6e5896;
+    }
+    .steel {
+      background-color: #b9b7cf;
+    }
+    .dragon {
+      background-color: #6f38f6;
+    }
+    .fairy {
+      background-color: #f9aec7;
+    }
