@@ -1,13 +1,15 @@
+//Constantes que pegam uma parte do HTML
 const pokemonList = document.getElementById('pokemonList')
 const pokemonDetails = document.getElementById('pokemonDetails')
 const thePokemon = document.getElementById('thePokemon')
+//Constantes e variáveis para fazer alterações na lista no HTML
 const limitList = 5
 const limitDetails = 1
 const maxRecords = 151
 let offsetDetails = 0
 let offsetList = 0
 
-
+//Função que converte os objetos declarados em HTML na listagem principal
 function convertPokemonToHtml(pokemon){
 
     return `
@@ -24,7 +26,7 @@ function convertPokemonToHtml(pokemon){
     `
 }
 
-
+//Função que converte os objetos declarados em HTML na listagem dos detalhes de cada pokemon
 function convertDetailsPokemonsToHtml(pokemon){
     return `
 <li class="thePokemonSelected ${pokemon.type}">
@@ -55,8 +57,11 @@ function convertDetailsPokemonsToHtml(pokemon){
     `
 }
 
+//Funções que carrega da API as informações dos pokemons considerando seu limitador de página 
 function loadPokemonItems(offset, limit){
+    //Pega todos os objetos e dá um limite de amostragem de acordo com os parâmetros
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
+        //Separa cada informação e envia no HTML
         const newHtmlPokemons =  pokemons.map(convertPokemonToHtml).join('')
         pokemonList.innerHTML += newHtmlPokemons
     })
@@ -69,9 +74,9 @@ function loadDetailsPokemon(offset, limit){
     })
 }
 
-
 loadPokemonItems(offsetList, limitList)
 
+//Função que aumenta a listagem dos pokemons a cada clique até chegar no limitador total de amostragem 
 function loadMoreButton (){
     offsetList += limitList
     const qtdRecords = offsetList + limitList
@@ -85,8 +90,7 @@ if (qtdRecords >= maxRecords){
     }
 }
 
-document.getElementById('contentDetails').style.display = 'none'
-
+//Função que carrega os detalhes do pokemon selecionado
 function detailsPokemons (pokemon){
     document.getElementById('content').style.display = 'none'
     document.getElementById('contentDetails').style.display = 'inline'
@@ -94,6 +98,7 @@ function detailsPokemons (pokemon){
     loadDetailsPokemon(offsetDetails, limitDetails)
 }
 
+//Função que recarrega a página
 function Back(){
     location.reload()
     }
