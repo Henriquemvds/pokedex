@@ -1,3 +1,4 @@
+//Classe de objeto do pokemon
 class Pokemon {
     number;
     name;
