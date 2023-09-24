@@ -1,5 +1,8 @@
-# pokedex
-Lista de pokemons sincronizada com API com responsividade mobile. 
+# React + Vite
 
-![print tela inicial pokedex](https://github.com/DevHenriquecido/pokedex/assets/108635477/cb65efa5-f942-4e39-a1fd-008b9556d88e)
-![print de pokemon selecionado](https://github.com/DevHenriquecido/pokedex/assets/108635477/0c44ecdf-1c57-4de1-aa24-06518557ed5f)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
