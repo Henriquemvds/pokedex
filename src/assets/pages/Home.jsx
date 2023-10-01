@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState, useEffect,useRef} from 'react'
 import api from "../scripts/poke-api";
-import Pokemon from '../scripts/pokemons-model';
+import Pokemon from '../scripts/pokemon-model';
 
 function Home() {
     
@@ -21,10 +21,22 @@ function Home() {
     const getListPokemons = (pokeDetail) => {
         const pokemon = new Pokemon()
 
+        pokemon.number = pokeDetail.order
         pokemon.name = pokeDetail.name
 
         pokemons.push(pokemon)
         
+
+        pokemons.sort(function (a, b) {
+            if (a.number > b.number) {
+              return 1;
+            }
+            if (a.number < b.number) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+        });
         return setPokemons([...pokemons])
     } 
 
@@ -50,7 +62,7 @@ useEffect(() => {
             <h1>Pokedex - Primeira Geração</h1>
             <ul>
          {pokemons.map((pokemon, i) => (
-             <li key={i}>{pokemon.name}</li>
+             <li key={i}>{pokemon.name}, {pokemon.number}</li>
          ))}
         
             </ul>
