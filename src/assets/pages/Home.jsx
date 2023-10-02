@@ -23,6 +23,9 @@ function Home() {
 
         pokemon.number = pokeDetail.order
         pokemon.name = pokeDetail.name
+        const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name).join(" ")
+        
+        pokemon.types = types
 
         pokemons.push(pokemon)
         
@@ -62,7 +65,7 @@ useEffect(() => {
             <h1>Pokedex - Primeira Geração</h1>
             <ul>
          {pokemons.map((pokemon, i) => (
-             <li key={i}>{pokemon.name}, {pokemon.number}</li>
+             <li key={i}>{pokemon.name}, {pokemon.number} {pokemon.types}</li>
          ))}
         
             </ul>
