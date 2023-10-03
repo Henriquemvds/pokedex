@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useState, useEffect,useRef} from 'react'
+import { useState, useEffect} from 'react'
 import api from "../scripts/poke-api";
 import Pokemon from '../scripts/pokemon-model';
+import '../pages/Home.css'
 
 function Home() {
     
@@ -23,9 +23,12 @@ function Home() {
 
         pokemon.number = pokeDetail.order
         pokemon.name = pokeDetail.name
-        const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name).join(" ")
+        const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
+
+        const [type] = types
 
         pokemon.types = types
+        pokemon.type = type
 
         pokemon.image = pokeDetail.sprites.other.dream_world.front_default
 
@@ -63,16 +66,26 @@ useEffect(() => {
 
 
     return (
-        <div>
+        <section id="content" className="content">
             <h1>Pokedex - Primeira Geração</h1>
-            <ul>
+            <ol id="pokemonList" className="pokemons"> 
          {pokemons.map((pokemon, i) => (
-             <> <li key={i}>{pokemon.name}, {pokemon.number}, {pokemon.types}</li>
-             <img src={pokemon.image}/> </>
+             <> <li id="pokemon" className={pokemon.type}> 
+            <span className="name">{pokemon.name}</span>
+            <span className="number">#{pokemon.number}</span>
+            <div className="detail">
+            <ol className="types">
+             {pokemon.types.map((type) => <li  id='type' className={type}>{type}</li>)}
+             </ol>
+             <img src={pokemon.image}/>
+             </div>
+             </li>
+             
+             </>
              ))}
         
-            </ul>
-        </div>
+        </ol>
+    </section>
     )
 }
 
