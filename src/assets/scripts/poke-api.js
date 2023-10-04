@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const offset = 0
 const limit = 5
 
@@ -8,4 +7,4 @@ const api = axios.create({
 });
 
 
-export default api;
+ export default api;
