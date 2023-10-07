@@ -30,7 +30,7 @@ const getLinksPokemons = (url) => {
 const getListPokemons = (pokeDetail) => {
     const pokemon = new Pokemon()
 
-    pokemon.number = pokeDetail.order
+    pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
     const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
 
@@ -70,11 +70,12 @@ useEffect(() => {
     return (
         <section id="content" className="content">
             <h1>Pokedex - Primeira Geração</h1>
-            <Link to="/DetailsPokemons">
             <ol id="pokemonList" className="pokemons"> 
 
          {pokemons.map((pokemon, i) => (
-             <> <li id="pokemon" className={pokemon.type}> 
+             <> 
+            <Link to={`/DetailsPokemons/${pokemon.number}`}>
+             <li id="pokemon" className={pokemon.type}> 
             <span className="name">{pokemon.name}</span>
             <span className="number">#{pokemon.number}</span>
             <div className="detail">
@@ -84,12 +85,12 @@ useEffect(() => {
              <img src={pokemon.image}/>
              </div>
              </li>
+             </Link>
              
              </>
              ))}
+             </ol>
         
-        </ol>
-             </Link>
     </section>
     )
 }
