@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import Pokemon from '../scripts/pokemon-model';
+import iconBack from '../images/cc7f765ef44e613b06767db205f83e42.png'
+import '../pages/DetailsPokemons.css'
 
 function DetailsPokemons() {
     const [pokemon, setPokemon] = useState([])
@@ -50,22 +52,45 @@ function DetailsPokemons() {
      }, [] )
 
     return (
-        <section id="content" className="content">
-            <h1>Detalhes</h1>
-            <Link to="/">Home</Link>
+<section id="contentDetails" className="contentDetails">
+    <div className='align'>
+    <Link style={{textDecoration: 'none'}} to="/">
+            <img src={iconBack} className='iconBack'></img>
+        Voltar
+    </Link>
+    </div>
+           
             {pokemon.map((pokemon, i) => (
                 <>
-               <h1>{pokemon.name}</h1>
-               <span>#{pokemon.number}</span>
-               <ol>
-               {pokemon.types.map((type) => <li class="type ${type}">{type}</li>)}
+                 <ol id="pokemonDetails" className="pokemonDetails"> 
+                <li id="thePokemonSelected" className={pokemon.type}>
+               <h1 className="name">{pokemon.name}</h1>
+               <span className="number">#{pokemon.number}</span>
+               <div className="detail">
+                <ol className="types">
+               {pokemon.types.map((type) => <li id='type' className={type}>{type}</li>)}
                </ol>
+               </div>
                <img src={pokemon.image}/>
-               {pokemon.stats.map((stat) => <li class="stat">{stat}</li>)}
-               {pokemon.power.map((base_stat) => <li class="power">{base_stat}</li>)}
+            </li>
+            
+  <li className="tributesPokemon">
+  <div className="powers">
+  <ol className="powerDetails">
+  <div className="nameStat">
+               {pokemon.stats.map((stat) => <li className="stat">{stat}</li>)}
+               </div>
+    <div className="numberPower">
+               {pokemon.power.map((base_stat) => <li className="power">{base_stat}</li>)}
+</div>
+  </ol>
+  </div>
+  </li>
+</ol>
                 </>
             ))
         }
+     
     </section>
     )
 }

@@ -74,7 +74,7 @@ useEffect(() => {
 
          {pokemons.map((pokemon, i) => (
              <> 
-            <Link to={`/DetailsPokemons/${pokemon.number}`}>
+            <Link style={{textDecoration: 'none'}} to={`/DetailsPokemons/${pokemon.number}`}>
              <li id="pokemon" className={pokemon.type}> 
             <span className="name">{pokemon.name}</span>
             <span className="number">#{pokemon.number}</span>
