@@ -4,6 +4,10 @@ class Pokemon {
     type;
     types = [];
     image;
+    stat;
+    stats = [];
+    power;
+    base_stat = [];
 }
 
 export default Pokemon;
