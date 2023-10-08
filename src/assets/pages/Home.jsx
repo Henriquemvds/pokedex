@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useState, useEffect} from 'react'
-import api from "../scripts/poke-api";
 import Pokemon from '../scripts/pokemon-model';
 import '../pages/Home.css'
 
@@ -11,9 +10,22 @@ function Home() {
    
 const [pokemons, setPokemons] = useState([])
 
-const getPokemons = () => {
-    api
-    .get()
+pokemons.sort(function (a, b) {
+    if (a.number > b.number) {
+      return 1;
+    }
+    if (a.number < b.number) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+});
+
+const limitList = 151
+let offsetList = 0
+
+const getPokemons =  (offset, limit) => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`)
     .then((response) => response.data)
     .then((jsonBody) => jsonBody.results)
     .then((results) => results.map((link) => link.url))
@@ -41,28 +53,17 @@ const getListPokemons = (pokeDetail) => {
 
     pokemon.image = pokeDetail.sprites.other.dream_world.front_default
 
-    pokemons.push(pokemon)
-    
-    pokemons.sort(function (a, b) {
-        if (a.number > b.number) {
-          return 1;
-        }
-        if (a.number < b.number) {
-          return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
-    return setPokemons([...pokemons])
+    return setPokemons((prev) => {{
+        return [...prev, pokemon]
+    }})
 } 
 
 console.log(pokemons)
 
-useEffect(() => {
-    let limit = 5
-    if (pokemons.length < limit) {
-        getPokemons()
-    }
+useEffect(() => {  
+ if (pokemons.length < limitList){
+     getPokemons(offsetList, limitList) 
+ }
     
 }, [])
 
@@ -90,7 +91,6 @@ useEffect(() => {
              </>
              ))}
              </ol>
-        
     </section>
     )
 }
