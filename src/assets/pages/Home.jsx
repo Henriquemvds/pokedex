@@ -9,6 +9,10 @@ function Home() {
     
    
 const [pokemons, setPokemons] = useState([])
+const [name, setName] = useState('')
+const api = 'https://pokeapi.co/api/v2/pokemon'
+const limitList = 151
+let offsetList = 0
 
 pokemons.sort(function (a, b) {
     if (a.number > b.number) {
@@ -21,11 +25,9 @@ pokemons.sort(function (a, b) {
     return 0;
 });
 
-const limitList = 151
-let offsetList = 0
 
 const getPokemons =  (offset, limit) => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`)
+    axios.get(`${api}?offset=${offset}&limit=${limit}`)
     .then((response) => response.data)
     .then((jsonBody) => jsonBody.results)
     .then((results) => results.map((link) => link.url))
@@ -36,7 +38,7 @@ const getPokemons =  (offset, limit) => {
 const getLinksPokemons = (url) => {
     axios.get(url)
     .then((pokemons) => pokemons.data)
-    .then(getListPokemons)
+    .then((getListPokemons))
 } 
 
 const getListPokemons = (pokeDetail) => {
@@ -58,19 +60,54 @@ const getListPokemons = (pokeDetail) => {
     }})
 } 
 
+const getPokemon = (pokeDetail) => {
+    const pokemon = new Pokemon()
+
+    pokemon.number = pokeDetail.id
+    pokemon.name = pokeDetail.name
+    const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
+
+    const [type] = types
+
+    pokemon.types = types
+    pokemon.type = type
+
+    pokemon.image = pokeDetail.sprites.other.dream_world.front_default
+
+    return setPokemons([pokemon])
+}
+
+const searchPokemon = () => {
+    axios.get(`${api}/${nome}`).then(({ data }) => {
+        getPokemon(data)
+      }, err => {
+        alert('Pokemon não encontrado')
+      })
+    }
+  
+    const onChangeName = ({ target }) => {
+      setName(target.value)
+  }
+
 console.log(pokemons)
 
 useEffect(() => {  
  if (pokemons.length < limitList){
      getPokemons(offsetList, limitList) 
  }
-    
 }, [])
 
 
     return (
         <section id="content" className="content">
             <h1>Pokedex - Primeira Geração</h1>
+            <input
+        type="text"
+        onChange={onChangeName}
+        placeholder='Ex: Pikachu'
+        value={nome}
+      />
+      <button onClick={searchPokemon}>Buscar</button>
             <ol id="pokemonList" className="pokemons"> 
 
          {pokemons.map((pokemon, i) => (
