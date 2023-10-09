@@ -78,7 +78,7 @@ const getPokemon = (pokeDetail) => {
 }
 
 const searchPokemon = () => {
-    axios.get(`${api}/${nome}`).then(({ data }) => {
+    axios.get(`${api}/${name}`).then(({ data }) => {
         getPokemon(data)
       }, err => {
         alert('Pokemon não encontrado')
@@ -105,7 +105,7 @@ useEffect(() => {
         type="text"
         onChange={onChangeName}
         placeholder='Ex: Pikachu'
-        value={nome}
+        value={name}
       />
       <button onClick={searchPokemon}>Buscar</button>
             <ol id="pokemonList" className="pokemons"> 
