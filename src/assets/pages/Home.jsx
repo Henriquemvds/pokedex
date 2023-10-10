@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useState, useEffect} from 'react'
-import Pokemon from '../scripts/pokemon-model';
 import '../pages/Home.css'
 
 
@@ -15,10 +14,10 @@ const limitList = 151
 let offsetList = 0
 
 pokemons.sort(function (a, b) {
-    if (a.number > b.number) {
+    if (a.id > b.id) {
       return 1;
     }
-    if (a.number < b.number) {
+    if (a.id < b.id) {
       return -1;
     }
     // a must be equal to b
@@ -37,27 +36,11 @@ const getPokemons =  (offset, limit) => {
 
 const getLinksPokemons = (url) => {
     axios.get(url)
-    .then((pokemons) => pokemons.data)
-    .then((getListPokemons))
-} 
-
-const getListPokemons = (pokeDetail) => {
-    const pokemon = new Pokemon()
-
-    pokemon.number = pokeDetail.id
-    pokemon.name = pokeDetail.name
-    const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
-
-    const [type] = types
-
-    pokemon.types = types
-    pokemon.type = type
-
-    pokemon.image = pokeDetail.sprites.other.dream_world.front_default
-
-    return setPokemons((prev) => {{
-        return [...prev, pokemon]
-    }})
+    .then((pokemons) => {
+        return   setPokemons((prev) => {{
+            return [...prev, pokemons.data]
+        }})
+    })
 } 
 
 const getPokemon = (pokeDetail) => {
@@ -109,24 +92,24 @@ useEffect(() => {
       />
       <button onClick={searchPokemon}>Buscar</button>
             <ol id="pokemonList" className="pokemons"> 
-
-         {pokemons.map((pokemon, i) => (
+            {pokemons.map((pokemon, i) => (
              <> 
-            <Link style={{textDecoration: 'none'}} to={`/DetailsPokemons/${pokemon.number}`}>
-             <li id="pokemon" className={pokemon.type}> 
+            <Link style={{textDecoration: 'none'}} to={`/DetailsPokemons/${pokemon.id}`}>
+             <li id="pokemon" className={pokemon.types.map((typeSlot) =>  typeSlot.type.name).splice(0, 1)}> 
             <span className="name">{pokemon.name}</span>
-            <span className="number">#{pokemon.number}</span>
+            <span className="number">#{pokemon.id}</span>
             <div className="detail">
             <ol className="types">
-             {pokemon.types.map((type) => <li  id='type' className={type}>{type}</li>)}
+             {pokemon.types.map((typeSlot) => <li  id='type' className={typeSlot.type.name}>{typeSlot.type.name}</li>)}
              </ol>
-             <img src={pokemon.image}/>
+             <img src={pokemon.sprites.other.dream_world.front_default}/>
              </div>
              </li>
              </Link>
              
              </>
              ))}
+       
              </ol>
     </section>
     )
