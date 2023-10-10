@@ -43,26 +43,9 @@ const getLinksPokemons = (url) => {
     })
 } 
 
-const getPokemon = (pokeDetail) => {
-    const pokemon = new Pokemon()
-
-    pokemon.number = pokeDetail.id
-    pokemon.name = pokeDetail.name
-    const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
-
-    const [type] = types
-
-    pokemon.types = types
-    pokemon.type = type
-
-    pokemon.image = pokeDetail.sprites.other.dream_world.front_default
-
-    return setPokemons([pokemon])
-}
-
 const searchPokemon = () => {
     axios.get(`${api}/${name}`).then(({ data }) => {
-        getPokemon(data)
+       setPokemons([data])
       }, err => {
         alert('Pokemon não encontrado')
       })
