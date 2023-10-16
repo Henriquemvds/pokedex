@@ -14,9 +14,7 @@ function Home() {
   const [filter, setFilter] = useState(false)
   const limitList = 151
   const offsetList = 0
-  let select = document.getElementById('StatusType')
-  let value = select.options[select.selectedIndex].value
-
+  
   pokemons.sort(function (a, b) {
     if (a.id > b.id) {
       return 1;
@@ -27,87 +25,89 @@ function Home() {
     // a must be equal to b
     return 0;
   });
-
-
+  
+  
   const getPokemons = (offset, limit) => {
     axios.get(`${api}?offset=${offset}&limit=${limit}`)
-      .then((response) => response.data)
-      .then((jsonBody) => jsonBody.results)
-      .then((results) => results.map((link) => link.url))
-      .then((urls) => urls.map((url) => getLinksPokemons(url)))
+    .then((response) => response.data)
+    .then((jsonBody) => jsonBody.results)
+    .then((results) => results.map((link) => link.url))
+    .then((urls) => urls.map((url) => getLinksPokemons(url)))
   }
-
-
+  
+  
   const getLinksPokemons = (url) => {
     axios.get(url)
-      .then((pokemons) => {
-        return setPokemons((prev) => {
-          {
-            return [...prev, pokemons.data]
-          }
-        })
+    .then((pokemons) => {
+      return setPokemons((prev) => {
+        {
+          return [...prev, pokemons.data]
+        }
       })
+    })
   }
-
+    
   const searchPokemon = () => {
     setPokemon([])
     setPokemonsByType([])
-
+    
     axios.get(`${api}/${name.toLocaleLowerCase(0)}`)
-      .then((response) => {
-        setFilter(true)
-        setPokemon([response.data])
-      }, err => {
-        alert('Pokemon não encontrado')
-      })
+    .then((response) => {
+      setFilter(true)
+      setPokemon([response.data])
+    }, err => {
+      alert('Pokemon não encontrado')
+    })
   }
-
+  
   const onChangeName = ({ target }) => {
     setName(target.value)
   }
-
+  
   const filterTypes = () => {
     setPokemonsByType([])
     setPokemon([])
-
+    
+    let select = document.getElementById('StatusType')
+    let value = select.options[select.selectedIndex].value
+      
     if (value === 'all') {
       setFilter(false)
+      }
+
+      pokemons.map((pokemon, i) => {
+        pokemon.types.map((typeSlot) => {
+          if (typeSlot.type.name == value) {
+            setFilter(true)
+            setPokemonsByType((prev) => {
+              {
+                return [...prev, pokemon]
+              }
+            })
+          }
+        })
+      }
+      )
     }
+    
+    console.log(pokemons)
+    console.log(pokemonsByType)
+    useEffect(() => {
 
-    pokemons.map((pokemon, i) => {
-      pokemon.types.map((typeSlot) => {
-        if (typeSlot.type.name == value) {
-          setFilter(true)
-          setPokemonsByType((prev) => {
-            {
-              return [...prev, pokemon]
-            }
-          })
-        }
-      })
-    }
-    )
-  }
-
-  console.log(pokemons)
-  console.log(pokemonsByType)
-
-  useEffect(() => {
-    if (pokemons.length < limitList) {
-      getPokemons(offsetList, limitList)
-    }
-  }, [])
-
-
-  return (
-    <section id="content" className="content">
+      if (pokemons.length < limitList) {
+        getPokemons(offsetList, limitList)
+      }
+    }, [])
+    
+    return (
+      <section id="content" className="content">
       <h1>Pokedex - Primeira Geração</h1>
       <input
         type="text"
         onChange={onChangeName}
         placeholder='Ex: Pikachu'
         value={name}
-      />
+        />
       <button onClick={searchPokemon}>Buscar</button>
 
       <select id='StatusType'>
