@@ -6,6 +6,12 @@ import '../pages/Home.css'
 
 function Home() {
 
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-84XF2JXPKE');
+
   const api = 'https://pokeapi.co/api/v2/pokemon'
   const [pokemons, setPokemons] = useState([])
   const [pokemon, setPokemon] = useState([])
